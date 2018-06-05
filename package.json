@@ -1,0 +1,27 @@
+{
+  "name": "bambulife-be-assesment",
+  "version": "1.0.0",
+  "description": "Solution for Bambu Life backend assesment test",
+  "main": "index.js",
+  "scripts": {
+    "test": "gulp test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KXTan11/bambulife-be.git"
+  },
+  "keywords": [
+    "bambulife",
+    "backend",
+    "be"
+  ],
+  "author": "Kai Xi Tan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KXTan11/bambulife-be/issues"
+  },
+  "homepage": "https://github.com/KXTan11/bambulife-be#readme",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}
