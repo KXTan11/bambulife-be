@@ -2,10 +2,7 @@
   "name": "bambulife-be-assesment",
   "version": "1.0.0",
   "description": "Solution for Bambu Life backend assesment test",
-  "main": "index.js",
-  "scripts": {
-    "test": "gulp test"
-  },
+  "main": "app.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/KXTan11/bambulife-be.git"
@@ -22,6 +19,9 @@
   },
   "homepage": "https://github.com/KXTan11/bambulife-be#readme",
   "dependencies": {
-    "express": "^4.16.3"
+    "express": "^4.16.3",
+    "mocha": "^5.2.0",
+    "mysql": "^2.15.0",
+    "should": "^13.2.1"
   }
 }
