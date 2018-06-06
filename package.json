@@ -19,7 +19,10 @@
   },
   "homepage": "https://github.com/KXTan11/bambulife-be#readme",
   "dependencies": {
+    "bluebird": "^3.5.1",
+    "body-parser": "^1.18.3",
     "express": "^4.16.3",
+    "glob": "^7.1.2",
     "mocha": "^5.2.0",
     "mysql": "^2.15.0",
     "should": "^13.2.1"

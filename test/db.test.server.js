@@ -1,5 +1,6 @@
 var mocha = require('mocha'),
     should = require('should'),
+    Promise = require('bluebird'),
     db = require('../app/db.js');
 
 
@@ -20,11 +21,17 @@ describe('MySQL DB wrapper unit test', function() {
                 enum: ['A', 'B', 'C', 'D']
             }
         },
-        preSave: function(data, cb) {
+        preSave: function(connection, data) {
             if (data.profile === 'D') {
                 data.profile = 'A';
             }
-            cb(null, data);
+            return Promise.resolve(data);
+        },
+        postSave: function(connection, data) {
+            if (data.name === 'post user') {
+                data.post = 1;
+            }
+            return Promise.resolve(data);
         }
     };
 
@@ -91,21 +98,38 @@ describe('MySQL DB wrapper unit test', function() {
     });
 
     it('should be able to run a query', function(done) {
-        db.query('SELECT * FROM ' + table.name, function(err, rows) {
+        db.getConnection(function(err, connection) {
             should(err).be.not.ok();
-            rows.should.be.ok();
-            rows.length.should.equal(1);
-            done();
+            db.query(connection, 'SELECT * FROM ' + table.name, function(err, rows) {
+                connection.release();
+                should(err).be.not.ok();
+                rows.should.be.ok();
+                rows.length.should.equal(1);
+                done();
+            });
         });
+
     });
 
     it('should be able to run a get query', function(done) {
         var id = 1;
-        db.get(table, id, function(err, rows) {
+        db.get(table, id, null, function(err, result) {
             should(err).be.not.ok();
-            rows.should.be.ok();
-            rows.length.should.equal(1);
-            rows[0].id.should.equal(id);
+            result.should.be.ok();
+            result.id.should.equal(id);
+            done();
+        });
+    });
+
+
+    it('should be able to run a list query', function(done) {
+        db.list(table, {name: 'test user'}, ['profile'], {limit:1}, function(err, results) {
+            should(err).be.not.ok();
+            results.should.be.ok();
+            results.length.should.be.equal(1);
+            results[0].should.have.property('profile');
+            results[0].should.not.have.property('name');
+            results[0].should.not.have.property('id');
             done();
         });
     });
@@ -116,38 +140,49 @@ describe('MySQL DB wrapper unit test', function() {
             profile: 'C',
             name: 'test user 2'
         };
-        db.update(table, id, data,function(err) {
+        db.update(table, id, data,function(err, data) {
             should(err).be.not.ok();
-            db.get(table, id, function(err, rows) {
+            db.get(table, data.id, null, function(err, result) {
                 should(err).be.not.ok();
-                rows.should.be.ok();
-                rows.length.should.equal(1);
-                rows[0].id.should.equal(id);
-                rows[0].profile.should.equal(data.profile);
-                rows[0].name.should.equal(data.name);
+                result.should.be.ok();
+                result.id.should.equal(id);
+                result.profile.should.equal(data.profile);
+                result.name.should.equal(data.name);
                 done();
             });
         });
     });
 
 
-    it('should be able to run a update query adn run preSave function', function(done) {
+    it('should be able to run a update query and run preSave function', function(done) {
         var id = 1;
         var data = {
             profile: 'D',
             name: 'test user 3'
         };
-        db.update(table, id, data,function(err) {
+        db.update(table, id, data,function(err, data) {
             should(err).be.not.ok();
-            db.get(table, id, function(err, rows) {
+            db.get(table, data.id, null, function(err, result) {
                 should(err).be.not.ok();
-                rows.should.be.ok();
-                rows.length.should.equal(1);
-                rows[0].id.should.equal(id);
-                rows[0].profile.should.equal('A');
-                rows[0].name.should.equal(data.name);
+                result.should.be.ok();
+                result.id.should.equal(id);
+                result.profile.should.equal('A');
+                result.name.should.equal(data.name);
                 done();
             });
+        });
+    });
+
+    it('should be able to run a update query and run postSave function', function(done) {
+        var id = 1;
+        var data = {
+            profile: 'D',
+            name: 'post user'
+        };
+        db.update(table, id, data,function(err, data) {
+            should(err).be.not.ok();
+            data.post.should.equal(1);
+            done();
         });
     });
 
@@ -156,14 +191,13 @@ describe('MySQL DB wrapper unit test', function() {
             profile: 'A',
             name: 'test user 4'
         };
-        db.insert(table, data,function(err, result) {
+        db.insert(table, data,function(err, data) {
             should(err).be.not.ok();
-            db.get(table, result.insertId, function(err, rows) {
+            db.get(table, data.id, null, function(err, result) {
                 should(err).be.not.ok();
-                rows.should.be.ok();
-                rows.length.should.equal(1);
-                rows[0].profile.should.equal(data.profile);
-                rows[0].name.should.equal(data.name);
+                result.should.be.ok();
+                result.profile.should.equal(data.profile);
+                result.name.should.equal(data.name);
                 done();
             });
         });
@@ -174,28 +208,53 @@ describe('MySQL DB wrapper unit test', function() {
             profile: 'D',
             name: 'test user 5'
         };
-        db.insert(table, data,function(err, result) {
+        db.insert(table, data,function(err, data) {
             should(err).be.not.ok();
-            db.get(table, result.insertId, function(err, rows) {
+            db.get(table, data.id, null, function(err, result) {
                 should(err).be.not.ok();
-                rows.should.be.ok();
-                rows.length.should.equal(1);
-                rows[0].profile.should.equal('A');
-                rows[0].name.should.equal(data.name);
+                result.should.be.ok();
+                result.profile.should.equal('A');
+                result.name.should.equal(data.name);
                 done();
             });
         });
     });
 
 
-    it('should be able to run a get delete query', function(done) {
+    it('should be able to run a insert query and run postSave function', function(done) {
+        var data = {
+            profile: 'D',
+            name: 'post user'
+        };
+        db.insert(table, data,function(err, data) {
+            should(err).be.not.ok();
+            data.post.should.equal(1);
+            done();
+        });
+    });
+
+
+    it('should be able to run a get delete query using id only', function(done) {
         var id = 1;
         db.remove(table, id, function(err) {
             should(err).be.not.ok();
-            db.get(table, id, function(err, rows) {
+            db.get(table, id, null, function(err, result) {
                 should(err).be.not.ok();
-                rows.should.be.ok();
-                rows.length.should.equal(0);
+                result.should.be.not.ok();
+                done();
+            });
+
+        });
+    });
+
+
+    it('should be able to run a get delete query', function(done) {
+        var id = 1;
+        db.removeQuery(table, {name: 'test user'}, function(err) {
+            should(err).be.not.ok();
+            db.get(table, id, null, function(err, result) {
+                should(err).be.not.ok();
+                result.should.be.not.ok();
                 done();
             });
 

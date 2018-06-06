@@ -1,12 +1,8 @@
-module.exports = {
-    app: {
-        port: 3500
-    },
-    db: {
-        limit: 10,
-        host: 'localhost',
-        user: 'root',
-        password: 'NotDaikon11~',
-        name: 'bambulife'
+var fs = require('fs');
+var currentEnv = 'development';
+if (process.env.NODE_ENV) {
+    if (fs.existsSync('./env/' + process.env.NODE_ENV + '.js')) {
+        currentEnv = process.env.NODE_ENV;
     }
-};
+}
+module.exports = require('./env/' + currentEnv + '.js');

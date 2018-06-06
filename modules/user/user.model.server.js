@@ -1,29 +1,24 @@
-var db = require('../app/db.js');
+var db = require(global.__dirname + '/app/db.js'),
+    Promise = require('bluebird');
 
-var profileEnum = ['A', 'B', 'C', 'D'];
+var Answer = require(global.__dirname + '/modules/answer/answer.model.server.js');
+var Profile = require(global.__dirname + '/modules/profile/profile.model.server.js');
+
 var User = function() {
     // Table name
     this.name = 'users';
     // Table definition
     this.fields = {
         id: {
-            type: Number,
-            options: {
-
-            }
+            type: 'INT',
+            options: 'AUTO_INCREMENT PRIMARY KEY'
         },
         name: {
-            type: String,
-            options: {
-
-            }
+            type: 'VARCHAR',
+            length: 255
         },
-        profile: {
-            type: String,
-            enum: profileEnum,
-            options: {
-
-            }
+        profileId: {
+            type: 'INT'
         }
     };
 };
@@ -32,63 +27,105 @@ module.exports = new User();
 /**
  * Helper functions
  */
-var profileQuestionMap = [
-    [0, 2000, 4000, 6000, 8000, 10000],
-    [10000, 8000, 6000, 4000, 2000, 0]
-];
-function getUserProfile(answers) {
-    var score = 0;
-    for (var i=0; i<answers.length; i++) {
-        var result = profileQuestionMap[i].findIndex(answers[i]);
-        if (result >= 0) {
-            score += result + 1;
-        }
+function getUserProfile(answers, callback) {
+    var promise = Promise.map(answers, function(answer) {
+        return Answer.list({questionId: answer.id, value: String(answer.value)}, ['score'], {limit:1})
+            .then(function(results) {
+                return Promise.resolve((results && results.length > 0 && results[0].score) || 0)
+            })
+            .catch(function(err) {
+                return Promise.reject(err);
+            });
+        });
+    promise = promise
+        .then(function(scores) {
+            var total = scores.reduce(function(total, score) {
+                return total + score;
+            });
+            return Profile.getProfile(total);
+        })
+    .catch(function(err) {
+        return Promise.reject(err);
+    });
+
+    promise = promise.catch(function(err) {
+        return Promise.reject(err);
+    });
+
+    if (callback && typeof callback === 'function') {
+        promise.asCallback(callback);
+    } else {
+        return promise;
     }
 
-    var profile;
-    if (score >= 8) {
-        profile = profileEnum[0];
-    } else if (score >= 6) {
-        profile = profileEnum[1];
-    } else if (score >= 4) {
-        profile = profileEnum[2];
-    } else {
-        profile = profileEnum[3];
-    }
-    return profile;
 }
 
 /**
  * API Functions
  */
-function get(id, callback) {
-    db.get(this, id, null, callback);
+function get(id, projection, callback) {
+    return db.get(this, id, projection, callback);
 }
 
-function preSave(data, callback) {
-    try {
-        if (data && data.answers) {
-            data.profile = getUserProfile(data.answers);
-        }
-        callback(null, data);
-    } catch(err) {
-        callback(err);
+function list(query, projection, options, callback) {
+    return db.list(this, query, projection, options, callback);
+}
+
+function preSave(connection, data) {
+    var promise = Promise.resolve(data);
+    if (data && data.answers) {
+        promise = getUserProfile(data.answers)
+            .then(function(profile) {
+                data.profileId = profile;
+                delete data.answers;
+                return Promise.resolve(data);
+            });
     }
+    return promise;
 }
 
 
 function insert(data, callback) {
-    db.insert(this, data, function(err, row) {
-        callback(err, row.profile);
+    var promise = db.insert(this, data)
+        .then(function(data) {
+            return Profile.get(data.profileId);
+        })
+        .then(function(result) {
+            return Promise.resolve(result && result.type);
+        });
+    promise = promise.catch(function(err) {
+        return Promise.reject(err);
     });
+
+    if (callback && typeof callback === 'function') {
+        promise.asCallback(callback);
+    } else {
+        return promise;
+    }
+
 }
 
 function update(id, data, callback) {
-    db.update(this, id, data, callback);
+    var promise = db.update(this, id, data)
+        .then(function() {
+            return Profile.get(data.profileId);
+        })
+        .then(function(result) {
+            return Promise.resolve(result && result.type);
+        });
+    promise = promise.catch(function(err) {
+        return Promise.reject(err);
+    });
+
+    if (callback && typeof callback === 'function') {
+        promise.asCallback(callback);
+    } else {
+        return promise;
+    }
 }
 
 function remove(id, callback) {
-    db.remove(this, id, callback);
+    return db.remove(this, id, callback);
 }
 
 
@@ -96,6 +133,7 @@ function remove(id, callback) {
  * Module API
  */
 User.prototype.get = get;
+User.prototype.list = list;
 User.prototype.preSave = preSave;
 User.prototype.update = update;
 User.prototype.insert = insert;
