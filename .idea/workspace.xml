@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="900df07d-c4d6-47d7-82c3-f37919662467" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/app/env/production.js" afterPath="$PROJECT_DIR$/app/env/production.js" />
-      <change beforePath="$PROJECT_DIR$/modules/user/user.model.server.js" afterPath="$PROJECT_DIR$/modules/user/user.model.server.js" />
+      <change beforePath="$PROJECT_DIR$/test/user.test.server.js" afterPath="$PROJECT_DIR$/test/user.test.server.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -37,7 +36,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="server.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="server.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
@@ -50,8 +49,8 @@
       <file leaf-file-name="db.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/db.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="148">
-              <caret line="56" column="41" lean-forward="false" selection-start-line="56" selection-start-column="36" selection-end-line="56" selection-end-column="41" />
+            <state relative-caret-position="191">
+              <caret line="124" column="42" lean-forward="false" selection-start-line="124" selection-start-column="42" selection-end-line="124" selection-end-column="42" />
               <folding>
                 <element signature="e#391#725#0" expanded="false" />
                 <element signature="e#782#811#0" expanded="false" />
@@ -62,21 +61,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="user.model.server.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/modules/user/user.model.server.js">
+      <file leaf-file-name="user.test.server.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/test/user.test.server.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="502">
-              <caret line="83" column="19" lean-forward="true" selection-start-line="83" selection-start-column="19" selection-end-line="83" selection-end-column="19" />
+            <state relative-caret-position="191">
+              <caret line="31" column="30" lean-forward="false" selection-start-line="31" selection-start-column="30" selection-end-line="31" selection-end-column="30" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="config.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/config.js">
+      <file leaf-file-name="user.model.server.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/modules/user/user.model.server.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="7" column="49" lean-forward="false" selection-start-line="7" selection-start-column="49" selection-end-line="7" selection-end-column="49" />
+            <state relative-caret-position="502">
+              <caret line="83" column="19" lean-forward="true" selection-start-line="83" selection-start-column="19" selection-end-line="83" selection-end-column="19" />
               <folding />
             </state>
           </provider>
@@ -169,7 +168,6 @@
         <option value="$PROJECT_DIR$/scripts/dropTables.js" />
         <option value="$PROJECT_DIR$/modules/profile/profile.model.server.js" />
         <option value="$PROJECT_DIR$/app/db.js" />
-        <option value="$PROJECT_DIR$/test/user.test.server.js" />
         <option value="$PROJECT_DIR$/server.js" />
         <option value="$PROJECT_DIR$/app/env/test.js" />
         <option value="$PROJECT_DIR$/modules/question/question.model.server.js" />
@@ -182,6 +180,7 @@
         <option value="$PROJECT_DIR$/modules/user/user.model.server.js" />
         <option value="$PROJECT_DIR$/app/env/production.js" />
         <option value="$PROJECT_DIR$/app/env/development.js" />
+        <option value="$PROJECT_DIR$/test/user.test.server.js" />
       </list>
     </option>
   </component>
@@ -309,7 +308,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Attach to Node.js/Chrome.remote">
+  <component name="RunManager" selected="Mocha.users">
     <configuration name="remote" type="ChromiumRemoteDebugType" factoryName="Chromium Remote" port="5858" isV8Legacy="true" />
     <configuration name="startDB" type="NodeJSConfigurationType" factoryName="Node.js" path-to-js-file="scripts/startDb.js" working-dir="$PROJECT_DIR$" />
     <configuration name="db" type="mocha-javascript-test-runner" factoryName="Mocha">
@@ -359,17 +358,11 @@
       <option name="presentableId" value="Default" />
       <updated>1528169620093</updated>
       <workItem from="1528169622471" duration="40261000" />
-      <workItem from="1528455486206" duration="2794000" />
+      <workItem from="1528455486206" duration="2921000" />
     </task>
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="users - 2018.06.06 at 18h 21m 09s.xml">
-      <configuration name="users" configurationId="mocha-javascript-test-runner" />
-    </history-entry>
-    <history-entry file="users - 2018.06.06 at 18h 24m 44s.xml">
-      <configuration name="users" configurationId="mocha-javascript-test-runner" />
-    </history-entry>
     <history-entry file="users - 2018.06.06 at 18h 26m 00s.xml">
       <configuration name="users" configurationId="mocha-javascript-test-runner" />
     </history-entry>
@@ -394,9 +387,15 @@
     <history-entry file="users - 2018.06.06 at 18h 37m 19s.xml">
       <configuration name="users" configurationId="mocha-javascript-test-runner" />
     </history-entry>
+    <history-entry file="users - 2018.06.08 at 21h 23m 56s.xml">
+      <configuration name="users" configurationId="mocha-javascript-test-runner" />
+    </history-entry>
+    <history-entry file="users - 2018.06.08 at 21h 24m 24s.xml">
+      <configuration name="users" configurationId="mocha-javascript-test-runner" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="43055000" />
+    <option name="totallyTimeSpent" value="43182000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="1023" extended-state="6" />
@@ -409,7 +408,7 @@
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32939914" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3286638" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24954791" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
@@ -582,14 +581,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/user.test.server.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="361">
-          <caret line="26" column="12" lean-forward="false" selection-start-line="26" selection-start-column="12" selection-end-line="26" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/env/test.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
@@ -716,19 +707,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/db.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="148">
-          <caret line="56" column="41" lean-forward="false" selection-start-line="56" selection-start-column="36" selection-end-line="56" selection-end-column="41" />
-          <folding>
-            <element signature="e#391#725#0" expanded="false" />
-            <element signature="e#782#811#0" expanded="false" />
-            <element signature="e#11859#12887#0" expanded="false" />
-            <element signature="e#12950#14006#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/modules/user/user.model.server.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="502">
@@ -749,6 +727,27 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="21" lean-forward="false" selection-start-line="0" selection-start-column="21" selection-end-line="0" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/db.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="191">
+          <caret line="124" column="42" lean-forward="false" selection-start-line="124" selection-start-column="42" selection-end-line="124" selection-end-column="42" />
+          <folding>
+            <element signature="e#391#725#0" expanded="false" />
+            <element signature="e#782#811#0" expanded="false" />
+            <element signature="e#11859#12887#0" expanded="false" />
+            <element signature="e#12950#14006#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/user.test.server.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="191">
+          <caret line="31" column="30" lean-forward="false" selection-start-line="31" selection-start-column="30" selection-end-line="31" selection-end-column="30" />
           <folding />
         </state>
       </provider>

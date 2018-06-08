@@ -31,7 +31,7 @@ describe('User model unit test', function() {
     describe('GET', function() {
         it('should be able to get user', function (done) {
             var id = 1;
-            UserModel.get(id, function (err, ret) {
+            UserModel.get(id, null, function (err, ret) {
                 should(err).not.be.ok();
                 done();
             });
