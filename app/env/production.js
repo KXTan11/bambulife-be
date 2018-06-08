@@ -1,6 +1,6 @@
 module.exports = {
     app: {
-        port: 80,
+        port: process.env.PORT,
         title: 'Bambu life BE assesment test'
     },
     db: {

@@ -68,7 +68,7 @@ function get(id, projection, callback) {
 }
 
 function list(query, projection, options, callback) {
-    return db.list(this, query, projection, options, callback);
+    return db.list(this, query || {} , projection || {} , options || {}, callback);
 }
 
 function preSave(connection, data) {
