@@ -2,10 +2,11 @@
 var express = require('express'),
     bodyParser = require('body-parser'),
     path = require('path'),
-    glob = require('glob'),
-    config = require('./config.js');
+    glob = require('glob');
 
 global.__dirname = path.resolve(__dirname+'/../');
+var config = require('./config.js');
+
 module.exports.start = function (callback) {
     var app = express();
 

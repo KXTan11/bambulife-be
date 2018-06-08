@@ -7,7 +7,7 @@ module.exports = {
         limit: 10,
         host: 'localhost',
         user: 'root',
-        password: 'NotDaikon11~',
+        password: 'bambulife',
         name: 'bambulife'
     }
 };
